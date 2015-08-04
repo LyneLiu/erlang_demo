@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-type" content="text/html;charset=UTF-8" />
+<title>Erlang WebSocket Demo</title>
+<style ="text/css">
+#main {
+    margin: 0 auto;
+    width: 500px;
+    height: 300px;
+}
+#main h1 {
+    text-align: center;
+}
+#content {
+    height: 300px;
+    border: 1px solid #EDEDED;
+    padding-left: 5px;
+    overflow: auto;
+}
+</style>
+</head>
+<body>
+ 
+<div id="main">
+    <h1>Erlang WebSocket Demo</h1>
+    <div id="content">
+     
+    </div>
+    <div>
+        <p>
+            <input id="msg"size="42" />
+            <input type="submit" value="发 送" id="smt" />
+        </p>
+    </div>
+</div>
+ 
+<script src="http://code.jquery.com/jquery-1.10.0.min.js" type="text/javascript"></script>
+<script type="text/javascript">
+$(document).ready(function() {
+    if ("WebSocket" in window) 
+    {
+        var ws = new WebSocket("ws://localhost:12345");
+        ws.onopen = function() {
+            $("#content").append("<p style='color: #80ff00;'>websocket connected!</p>");
+        };
+        ws.onmessage = function (evt) {
+            var data = evt.data;
+            $("#content").append("<p>" +  data + "</p>");
+        };
+        ws.onclose = function() {
+            $("#content").append("<p style='color: #ff3737;'>websocket closed!</p>");
+        };
+        $("#msg").change(function() {
+            var val = $(this).val();
+            if ( val )
+            {
+                ws.send(val);
+            }
+            return false;
+        });
+        $("#smt").click(function() {
+            var val = $("#msg").val();
+            if ( val )
+            {
+                ws.send(val);
+            }
+            return false;
+        });
+    } 
+    else 
+    {
+        $("#content").append("<p style='color: #ff3737;'>Your browser don't support WebSocket!</p>");
+    };
+});
+</script>
+</body>
+</html>
