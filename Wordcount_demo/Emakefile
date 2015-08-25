@@ -1,0 +1,6 @@
+{
+ ['src/*'], % atom或者是atom的列表
+ 			% {"gen_mod.erl", [{i, "include}, {outdir, "ebin"}]}.  
+			% {["mod_battle.erl","mod_team.erl"], [{i, "include}, {outdir, "ebin"}]}.  
+ [{i, "include"},{outdir, "ebin"}]	% Options 参考文档：http://www.erlang.org/doc/man/compile.html
+}.
